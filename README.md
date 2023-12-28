@@ -1,1 +1,1 @@
-# QuickEventGallery
+# SimpleEventGallery
