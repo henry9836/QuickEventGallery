@@ -1,1 +1,7 @@
 <h1> This is the gallery :3 </h1>
+<section class="results">
+  <app-gallery-item-component
+    *ngFor="let galleryItem of galleryData"
+    [galleryItemInput]="galleryItem">
+  </app-gallery-item-component>
+</section>
