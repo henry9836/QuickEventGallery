@@ -2,13 +2,15 @@ import {Component, Input} from '@angular/core';
 import {GalleryItemInterface} from "../interfaces/galleryinterfaces";
 import {GalleryItemComponentComponent} from "../gallery-item-component/gallery-item-component.component";
 import {NgForOf} from "@angular/common";
+import {GallerizeDirective} from "ng-gallery/lightbox";
 
 @Component({
   selector: 'app-gallery',
   standalone: true,
   imports: [
     GalleryItemComponentComponent,
-    NgForOf
+    NgForOf,
+    GallerizeDirective
   ],
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.css'
@@ -36,7 +38,7 @@ export class GalleryComponent {
   ];
 
   examplePhoto: GalleryItemInterface = {
-    path: "1.jpeg",
+    path: `${this.baseUrl}1.jpeg`,
     alt: "manual image"
   };
 
