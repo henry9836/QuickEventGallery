@@ -3,6 +3,7 @@ import {GalleryItemInterface} from "../interfaces/galleryinterfaces";
 import {GalleryItemComponentComponent} from "../gallery-item-component/gallery-item-component.component";
 import {NgForOf} from "@angular/common";
 import {GallerizeDirective} from "ng-gallery/lightbox";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-gallery',
@@ -17,34 +18,34 @@ import {GallerizeDirective} from "ng-gallery/lightbox";
 })
 
 export class GalleryComponent {
-  readonly baseUrl = '../assets/gallery-data/';
-  galleryData: GalleryItemInterface[] = [
-    {
-      path: `${this.baseUrl}1.jpeg`,
-      alt: "image alt text"
-    },
-    {
-      path: `${this.baseUrl}2.jpeg`,
-      alt: "image alt text"
-    },
-    {
-      path: `${this.baseUrl}3.jpeg`,
-      alt: "image alt text"
-    },
-    {
-      path: `${this.baseUrl}4.jpeg`,
-      alt: "image alt text"
-    }
-  ];
+  constructor(private http: HttpClient) {}
 
-  examplePhoto: GalleryItemInterface = {
-    path: `${this.baseUrl}1.jpeg`,
-    alt: "manual image"
-  };
+  readonly baseUrl = 'http://localhost:8001/tmp';
+  galleryData: GalleryItemInterface[] = [];
 
-  constructor() {}
+  async downloadGalleryData() {
+    let result = this.http.get("http://localhost:8001/api/gallery", {
+      params: {"offset": 0}
+    }).subscribe(data =>{
+      console.log("got results from db...");
+      console.log(data);
+      // Clear existing data in galleryData array before adding new data
+      this.galleryData = [];
+
+      // Iterate through the array and push each item to the galleryData array
+      // Check if data is an array, then iterate and push each item
+      if (Array.isArray(data)) {
+        for (const item of data) {
+          this.galleryData.push({
+            path: `${this.baseUrl}/${item.filename}`,
+            alt: "data"
+          });
+        }
+      }
+    });
+  }
 
   ngOnInit(): void {
-    this.galleryData.push(this.examplePhoto);
+    this.downloadGalleryData();
   }
 }
