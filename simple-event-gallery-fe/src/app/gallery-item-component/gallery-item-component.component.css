@@ -1,6 +1,14 @@
-.listing-photo{
-  width: 10vw;
+.listing{
+  width: 200px;
+  height: 200px;
 }
+
+img{
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
 .listing-heading{
   color: #1c1c1c;
 }

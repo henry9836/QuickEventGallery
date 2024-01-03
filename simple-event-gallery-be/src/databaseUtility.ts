@@ -20,6 +20,16 @@ async function insertNewFile(dbConnection, fileName : string){
     }
 }
 
+export async function getNewGalleryData(offset : number){
+    const conn = await mariadbPool.getConnection();
+
+    const results = await conn.query("SELECT * FROM gallery LIMIT 70 OFFSET ?", [offset]);
+
+    await conn.release();
+
+    return results;
+}
+
 export async function uploadNewFileDb(fileName : string) {
     const MaxAttempts = 3;
     const conn = await mariadbPool.getConnection();
