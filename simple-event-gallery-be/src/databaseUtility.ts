@@ -23,7 +23,7 @@ async function insertNewFile(dbConnection, fileName : string){
 export async function getNewGalleryData(offset : number){
     const conn = await mariadbPool.getConnection();
 
-    const results = await conn.query("SELECT * FROM gallery LIMIT 70 OFFSET ?", [offset]);
+    const results = await conn.query("SELECT * FROM gallery ORDER BY id DESC LIMIT 70 OFFSET ?", [offset]);
 
     await conn.release();
 
