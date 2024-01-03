@@ -20,7 +20,7 @@ async function insertNewFile(dbConnection, fileName : string){
     }
 }
 
-export async function uploadNewFile(fileName : string) {
+export async function uploadNewFileDb(fileName : string) {
     const MaxAttempts = 3;
     const conn = await mariadbPool.getConnection();
     let InsertedSuccessfully = false;

@@ -5,14 +5,17 @@ import { NavbarComponent } from "./navbar/navbar.component";
 import { FloatinguploadComponent } from "./floatingupload/floatingupload.component";
 import { GalleryItemInterface } from "./interfaces/galleryinterfaces";
 import { GalleryComponent } from "./gallery/gallery.component";
+import {UploadComponent} from "./upload/upload.component";
+import {HttpClientModule} from "@angular/common/http";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NavbarComponent, FloatinguploadComponent, GalleryComponent],
+  imports: [CommonModule, RouterOutlet, NavbarComponent, FloatinguploadComponent, GalleryComponent, UploadComponent, HttpClientModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
+
 export class AppComponent {
   title = 'simple-event-gallery-fe';
 }
