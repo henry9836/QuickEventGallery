@@ -25,7 +25,7 @@ import {CommonModule} from "@angular/common";
 export class UploadComponent {
 
   @Input()
-  requiredFileType: string = "image/png";
+  requiredFileType: string = "image/*, video/*";
 
   baseApiUrl: string = "http://localhost:8001/api";
   activeFileName: string = "";

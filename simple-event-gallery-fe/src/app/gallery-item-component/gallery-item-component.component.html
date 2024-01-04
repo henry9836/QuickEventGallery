@@ -1,6 +1,19 @@
 
 <section class="listing">
 <a [href]="galleryItemInput.path" target="_blank">
-  <img class="listing-photo" [src]="galleryItemInput.path" alt="{{galleryItemInput.alt}}">
+  <ng-container *ngIf="isImage(galleryItemInput.path)">
+    <img class="listing-photo" [src]="galleryItemInput.path" alt="{{galleryItemInput.alt}}">
+  </ng-container>
+
+  <ng-container *ngIf="isVideo(galleryItemInput.path)">
+    <video controls >
+      <source [src]="galleryItemInput.path" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </ng-container>
+
+  <ng-container *ngIf="isUnsupported(galleryItemInput.path)">
+    Unsupported
+  </ng-container>
 </a>
 </section>

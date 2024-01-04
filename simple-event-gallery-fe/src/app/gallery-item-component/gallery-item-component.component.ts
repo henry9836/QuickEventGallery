@@ -12,4 +12,20 @@ import {CommonModule} from "@angular/common";
 
 export class GalleryItemComponentComponent {
   @Input() galleryItemInput! : GalleryItemInterface;
+
+  isImage(filePath: string): boolean {
+    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'heif']; // Add more if needed
+    const extension = filePath.split('.').pop()?.toLowerCase() || '';
+    return imageExtensions.includes(extension);
+  }
+
+  isVideo(filePath: string): boolean {
+    const videoExtensions = ['mp4', 'webm', 'avi', 'mov']; // Add more if needed
+    const extension = filePath.split('.').pop()?.toLowerCase() || '';
+    return videoExtensions.includes(extension);
+  }
+
+  isUnsupported(filePath: string): boolean {
+    return (!this.isImage(filePath)) && (!this.isVideo(filePath));
+  }
 }
