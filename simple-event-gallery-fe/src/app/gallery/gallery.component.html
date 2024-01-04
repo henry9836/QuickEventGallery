@@ -17,7 +17,7 @@
     Previous
   </mat-icon>
 
-  Page {{ (currentOffset / 20) + 1 }}
+  Page {{ (currentOffset / dbGroupSize ) + 1 }}
 
   <mat-icon class="next-page" color="primary" (click)="travelOnePage(true)">
     <fa-icon [icon]="faRightLong"></fa-icon>
@@ -37,7 +37,7 @@
     Previous
   </mat-icon>
 
-  Page {{ (currentOffset / 20) + 1 }}
+  Page {{ (currentOffset / dbGroupSize ) + 1 }}
 
   <mat-icon class="next-page" color="primary" (click)="travelOnePage(true)">
     <fa-icon [icon]="faRightLong"></fa-icon>
