@@ -4,14 +4,19 @@ import {MatButtonModule} from "@angular/material/button";
 import {HttpClient, HttpEventType, HttpRequest} from "@angular/common/http";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {finalize, Subscription} from 'rxjs';
+import {faCloudArrowUp} from "@fortawesome/free-solid-svg-icons";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-upload',
   standalone: true,
   imports: [
+    CommonModule,
     MatIconModule,
     MatButtonModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    FaIconComponent
   ],
   templateUrl: './upload.component.html',
   styleUrl: './upload.component.css'
@@ -23,6 +28,7 @@ export class UploadComponent {
   requiredFileType: string = "image/png";
 
   baseApiUrl: string = "http://localhost:8001/api";
+  activeFileName: string = "";
 
   constructor(private http: HttpClient) {
   }
@@ -61,6 +67,7 @@ export class UploadComponent {
     );
     upload$.subscribe(event => {
       if (event.type == HttpEventType.UploadProgress) {
+        this.activeFileName = file.name;
         if (event.total)
           this.uploadProgress = Math.round(100 * (event.loaded / event.total));
       }
@@ -77,5 +84,8 @@ export class UploadComponent {
     }
     this.uploadProgress = null;
     this.uploadSub = null;
+    this.activeFileName = "";
   }
+
+  protected readonly faCloudArrowUp = faCloudArrowUp;
 }

@@ -1,5 +1,17 @@
-/*
+.progress-bar{
+  width: 90%;
+  display: inline-block;
+}
+.cancel-upload{
+  display: inline-block;
+}
+
 .file-input {
   display: none;
 }
-*/
+
+.floating-bottom-right{
+  position: fixed !important;
+  bottom: 15px;
+  right: 15px;
+}
