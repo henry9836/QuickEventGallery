@@ -38,7 +38,7 @@ export class GalleryComponent {
   currentEventId : number = -1;
   currentOffset : number = 0;
   //Limited to 20 on backend
-  dbGroupSize : number = 20;
+  dbGroupSize : number = 14;
 
   async downloadGalleryData() {
 
