@@ -1,7 +1,8 @@
 <section class="listing">
-<a [href]="galleryItemInput.path" target="_blank">
   <ng-container *ngIf="isImage(galleryItemInput.path)">
+    <a [href]="galleryItemInput.path" target="_blank">
     <img class="listing-photo" [src]="galleryItemInput.path" alt="{{galleryItemInput.alt}}">
+    </a>
   </ng-container>
 
   <ng-container *ngIf="isVideo(galleryItemInput.path)">
@@ -14,5 +15,4 @@
   <ng-container *ngIf="isUnsupported(galleryItemInput.path)">
     Unsupported
   </ng-container>
-</a>
 </section>
