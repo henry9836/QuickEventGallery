@@ -2,7 +2,6 @@ import {Component, Input} from '@angular/core';
 import {GalleryItemInterface} from "../interfaces/galleryinterfaces";
 import {GalleryItemComponentComponent} from "../gallery-item-component/gallery-item-component.component";
 import {NgForOf, NgIf} from "@angular/common";
-import {GallerizeDirective} from "ng-gallery/lightbox";
 import {HttpClient} from "@angular/common/http";
 import {MatIconModule} from "@angular/material/icon";
 import {MatMenuModule} from "@angular/material/menu";
@@ -17,7 +16,6 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
   imports: [
     GalleryItemComponentComponent,
     NgForOf,
-    GallerizeDirective,
     MatIconModule,
     MatMenuModule,
     MatButtonModule,
