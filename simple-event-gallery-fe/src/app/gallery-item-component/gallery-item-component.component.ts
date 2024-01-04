@@ -1,11 +1,13 @@
 import {Component, Input} from '@angular/core';
 import {GalleryItemInterface} from "../interfaces/galleryinterfaces";
 import {CommonModule} from "@angular/common";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
 
 @Component({
   selector: 'app-gallery-item-component',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatButtonModule, MatIconModule],
   templateUrl: './gallery-item-component.component.html',
   styleUrl: './gallery-item-component.component.css'
 })

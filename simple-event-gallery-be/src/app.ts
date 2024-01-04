@@ -30,14 +30,21 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/gallery', async (req, res)=>{
-  let offset : number|null = req.params['offset'];
-  if (offset == null){
-    offset = 0;
-  }
+  const offset = req.query.offset;
 
-  const results = await getNewGalleryData(offset);
-  console.log(results);
-  res.send(results);
+  const offsetNumber = Number(offset);
+
+  console.log(`${offsetNumber} received as offset`);
+  console.log(`${typeof offsetNumber}`);
+  if (typeof offsetNumber === 'number') {
+    console.log(`${offsetNumber} IS A NUMBER`);
+    const results = await getNewGalleryData(offsetNumber);
+    console.log(results);
+    res.send(results);
+  }
+  else {
+    res.send("Error when trying to load gallery data");
+  }
 });
 
 app.post('/api/upload', upload.single("file"), async (req, res) => {

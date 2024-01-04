@@ -4,6 +4,7 @@ import {GalleryItemComponentComponent} from "../gallery-item-component/gallery-i
 import {NgForOf} from "@angular/common";
 import {GallerizeDirective} from "ng-gallery/lightbox";
 import {HttpClient} from "@angular/common/http";
+import {MatIconModule} from "@angular/material/icon";
 
 @Component({
   selector: 'app-gallery',
@@ -11,7 +12,8 @@ import {HttpClient} from "@angular/common/http";
   imports: [
     GalleryItemComponentComponent,
     NgForOf,
-    GallerizeDirective
+    GallerizeDirective,
+    MatIconModule
   ],
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.css'
@@ -23,9 +25,14 @@ export class GalleryComponent {
   readonly baseUrl = 'http://scuttlinglizard.ddns.net:8001/tmp';
   galleryData: GalleryItemInterface[] = [];
 
+  currentOffset : number = 0;
+  //Limited to 20 on backend
+  dbGroupSize : number = 20;
+
   async downloadGalleryData() {
+    console.log(`Download with offset: ${this.currentOffset}`)
     let result = this.http.get("http://scuttlinglizard.ddns.net:8001/api/gallery", {
-      params: {"offset": 0}
+      params: {"offset": this.currentOffset}
     }).subscribe(data =>{
       console.log("got results from db...");
       console.log(data);
@@ -43,6 +50,24 @@ export class GalleryComponent {
         }
       }
     });
+  }
+
+  travelOnePage(bIsForward : boolean){
+    if (bIsForward) {
+      this.currentOffset += this.dbGroupSize;
+    }
+    else {
+      this.currentOffset -= this.dbGroupSize;
+      if (this.currentOffset < 0){
+        this.currentOffset = 0;
+      }
+    }
+
+    // Clear the array
+    this.galleryData = [];
+
+    // Download and populate a new one
+    this.downloadGalleryData();
   }
 
   ngOnInit(): void {
