@@ -44,10 +44,12 @@ hashCalc(input : string) : Observable<string> {
 
   onSubmit(){
     let value = (<HTMLInputElement>document.getElementById("passwordField")).value;
+    console.error(`Error: ${value}`);
     this.hashCalc(value)
       .subscribe(
         (hash) => {
           this.password = hash;
+          console.error(`Error: ${hash}`);
         },
         (error) => {
           console.error(`Error: ${error}`);

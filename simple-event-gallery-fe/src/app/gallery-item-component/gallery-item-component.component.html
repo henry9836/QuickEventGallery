@@ -13,6 +13,6 @@
   </ng-container>
 
   <ng-container *ngIf="isUnsupported(galleryItemInput.path)">
-    Unsupported
+    Unsupported <br> <a [href]="galleryItemInput.path" target="_blank"> Download File </a>
   </ng-container>
 </section>
