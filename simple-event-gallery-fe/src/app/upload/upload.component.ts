@@ -7,6 +7,7 @@ import {finalize, Subscription} from 'rxjs';
 import {faCloudArrowUp} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {CommonModule} from "@angular/common";
+import {UploadService} from "../upload.service";
 
 @Component({
   selector: 'app-upload',
@@ -33,7 +34,7 @@ export class UploadComponent {
   baseApiUrl: string = "http://scuttlinglizard.ddns.net:8001/api";
   feedback: string = "";
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,  private uploadService: UploadService) {
   }
 
   uploadSub: Subscription | null = null;
@@ -77,6 +78,10 @@ export class UploadComponent {
     })
   }
 
+  TriggerMe(){
+    console.log("Success!");
+  }
+
   cancelUpload() {
     this.reset();
   }
@@ -88,6 +93,7 @@ export class UploadComponent {
     this.uploadProgress = null;
     this.uploadSub = null;
     this.feedback = "";
+    this.uploadService.triggerMe();
   }
 
   protected readonly faCloudArrowUp = faCloudArrowUp;

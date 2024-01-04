@@ -9,6 +9,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {UploadComponent} from "../upload/upload.component";
 import {faCloudArrowUp, faLeftLong, faRightLong} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {UploadService} from "../upload.service";
+
 
 @Component({
   selector: 'app-gallery',
@@ -28,7 +30,7 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 })
 
 export class GalleryComponent {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private uploadService: UploadService) {}
 
   readonly baseUrl = 'http://scuttlinglizard.ddns.net:8001/tmp';
   galleryData: GalleryItemInterface[] = [];
@@ -98,6 +100,11 @@ export class GalleryComponent {
 
   ngOnInit(): void {
     this.downloadGalleryData();
+
+    // When uploading is done
+    this.uploadService.triggerMe$.subscribe(() => {
+      this.downloadGalleryData();
+    });
   }
 
   protected readonly faCloudArrowUp = faCloudArrowUp;
