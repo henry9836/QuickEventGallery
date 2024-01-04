@@ -5,7 +5,7 @@ import { NavbarComponent } from "./navbar/navbar.component";
 import { GalleryItemInterface } from "./interfaces/galleryinterfaces";
 import { GalleryComponent } from "./gallery/gallery.component";
 import {UploadComponent} from "./upload/upload.component";
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 
 @Component({
   selector: 'app-root',

@@ -20,11 +20,11 @@ import {HttpClient} from "@angular/common/http";
 export class GalleryComponent {
   constructor(private http: HttpClient) {}
 
-  readonly baseUrl = 'http://localhost:8001/tmp';
+  readonly baseUrl = 'http://scuttlinglizard.ddns.net:8001/tmp';
   galleryData: GalleryItemInterface[] = [];
 
   async downloadGalleryData() {
-    let result = this.http.get("http://localhost:8001/api/gallery", {
+    let result = this.http.get("http://scuttlinglizard.ddns.net:8001/api/gallery", {
       params: {"offset": 0}
     }).subscribe(data =>{
       console.log("got results from db...");

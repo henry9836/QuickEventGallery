@@ -27,7 +27,7 @@ export class UploadComponent {
   @Input()
   requiredFileType: string = "image/*, video/*";
 
-  baseApiUrl: string = "http://localhost:8001/api";
+  baseApiUrl: string = "http://scuttlinglizard.ddns.net:8001/api";
   activeFileName: string = "";
 
   constructor(private http: HttpClient) {
