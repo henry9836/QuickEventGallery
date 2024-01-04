@@ -1,10 +1,15 @@
 import {Component, Input} from '@angular/core';
 import {GalleryItemInterface} from "../interfaces/galleryinterfaces";
 import {GalleryItemComponentComponent} from "../gallery-item-component/gallery-item-component.component";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {GallerizeDirective} from "ng-gallery/lightbox";
 import {HttpClient} from "@angular/common/http";
 import {MatIconModule} from "@angular/material/icon";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatButtonModule} from "@angular/material/button";
+import {UploadComponent} from "../upload/upload.component";
+import {faCloudArrowUp, faLeftLong, faRightLong} from "@fortawesome/free-solid-svg-icons";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 
 @Component({
   selector: 'app-gallery',
@@ -13,7 +18,12 @@ import {MatIconModule} from "@angular/material/icon";
     GalleryItemComponentComponent,
     NgForOf,
     GallerizeDirective,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule,
+    MatButtonModule,
+    UploadComponent,
+    FaIconComponent,
+    NgIf
   ],
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.css'
@@ -25,14 +35,23 @@ export class GalleryComponent {
   readonly baseUrl = 'http://scuttlinglizard.ddns.net:8001/tmp';
   galleryData: GalleryItemInterface[] = [];
 
+  currentEventId : number = -1;
   currentOffset : number = 0;
   //Limited to 20 on backend
   dbGroupSize : number = 20;
 
   async downloadGalleryData() {
+
+    if (this.currentEventId < 0){
+      return;
+    }
+
     console.log(`Download with offset: ${this.currentOffset}`)
+    console.log(`Download with eventId: ${this.currentEventId}`)
+
     let result = this.http.get("http://scuttlinglizard.ddns.net:8001/api/gallery", {
-      params: {"offset": this.currentOffset}
+      params: {"offset": this.currentOffset,
+              "eventId": this.currentEventId}
     }).subscribe(data =>{
       console.log("got results from db...");
       console.log(data);
@@ -52,6 +71,18 @@ export class GalleryComponent {
     });
   }
 
+  refreshGallery(){
+    this.downloadGalleryData();
+  }
+
+  changeEvent(newEventId : number){
+    this.currentEventId = newEventId;
+    this.currentOffset = 0;
+
+    // Download and populate a new one
+    this.downloadGalleryData();
+  }
+
   travelOnePage(bIsForward : boolean){
     if (bIsForward) {
       this.currentOffset += this.dbGroupSize;
@@ -63,9 +94,6 @@ export class GalleryComponent {
       }
     }
 
-    // Clear the array
-    this.galleryData = [];
-
     // Download and populate a new one
     this.downloadGalleryData();
   }
@@ -73,4 +101,8 @@ export class GalleryComponent {
   ngOnInit(): void {
     this.downloadGalleryData();
   }
+
+  protected readonly faCloudArrowUp = faCloudArrowUp;
+  protected readonly faRightLong = faRightLong;
+  protected readonly faLeftLong = faLeftLong;
 }

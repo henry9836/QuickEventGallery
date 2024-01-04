@@ -31,16 +31,20 @@ app.get('/', (req, res) => {
 
 app.get('/api/gallery', async (req, res)=>{
   const offset = req.query.offset;
+  const eventId = req.query.eventId;
 
   const offsetNumber = Number(offset);
+  const eventIdNumber = Number(eventId);
 
-  console.log(`${offsetNumber} received as offset`);
-  console.log(`${typeof offsetNumber}`);
   if (typeof offsetNumber === 'number') {
-    console.log(`${offsetNumber} IS A NUMBER`);
-    const results = await getNewGalleryData(offsetNumber);
-    console.log(results);
-    res.send(results);
+    if (typeof eventIdNumber === 'number') {
+      const results = await getNewGalleryData(eventIdNumber, offsetNumber);
+      console.log(results);
+      res.send(results);
+    }
+    else {
+      res.send("Error when trying to load gallery data");
+    }
   }
   else {
     res.send("Error when trying to load gallery data");
@@ -49,11 +53,13 @@ app.get('/api/gallery', async (req, res)=>{
 
 app.post('/api/upload', upload.single("file"), async (req, res) => {
   const file = req.file;
-  console.log(file);
+
+  const eventId = req.body.eventId;
+  const eventIdNumber = Number(eventId);
 
   if (file){
     res.json(file);
-    await uploadNewFileDb(file.filename);
+    await uploadNewFileDb(file.filename, eventIdNumber);
   }
   else{
     throw new Error("File upload failed")

@@ -4,10 +4,10 @@ import config from "./config.json";
 
 const mariadbPool = mariadb.createPool(config.databaseInfo);
 
-async function insertNewFile(dbConnection, fileName : string){
+async function insertNewFile(dbConnection, fileName : string, eventId : number){
     try {
         console.log("ATTEMPTING TO INSERT...")
-        const insert = await dbConnection.query("INSERT INTO gallery (filename) VALUES (?)", fileName);
+        const insert = await dbConnection.query("INSERT INTO gallery (filename, eventId) VALUES (?, ?)", [fileName, eventId]);
 
         console.log(insert);
         const rows = await dbConnection.query("SELECT * FROM gallery");
@@ -20,29 +20,24 @@ async function insertNewFile(dbConnection, fileName : string){
     }
 }
 
-export async function getNewGalleryData(offset : number){
+export async function getNewGalleryData(eventId: number, offset : number){
     const conn = await mariadbPool.getConnection();
 
-    console.log(`got offset: ${offset}`);
-
-    const results = await conn.query("SELECT * FROM gallery ORDER BY id DESC LIMIT 20 OFFSET ?", [offset]);
+    const results = await conn.query("SELECT * FROM gallery WHERE eventId = ? ORDER BY id DESC LIMIT 14 OFFSET ?", [eventId, offset]);
 
     await conn.release();
 
     return results;
 }
 
-export async function uploadNewFileDb(fileName : string) {
+export async function uploadNewFileDb(fileName : string, eventId : number) {
     const MaxAttempts = 3;
     const conn = await mariadbPool.getConnection();
     let InsertedSuccessfully = false;
 
     // Attempt to make the new file
     for (let attempt = 0; attempt < MaxAttempts; attempt++) {
-        console.log(`${attempt} Attempting to create file: ${fileName}`);
-        await insertNewFile(conn, fileName).then((result) => {
-            console.log(`insert new file result: ${result}`)
-
+        await insertNewFile(conn, fileName, eventId).then((result) => {
             if (result == "ERROR") {
                 fileName = generateUniqueFilename(fileName);
             } else {

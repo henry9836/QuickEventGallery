@@ -1,14 +1,59 @@
-<div class="gallery">
-  <app-gallery-item-component
-    *ngFor="let galleryItem of galleryData"
-    [galleryItemInput]="galleryItem">
-  </app-gallery-item-component>
-</div>
 
 
-<mat-icon class="next-page" color="primary" (click)="travelOnePage(false)">
-  Previous
-</mat-icon>
-<mat-icon class="next-page" color="primary" (click)="travelOnePage(true)">
-  Next
-</mat-icon>
+<ng-container *ngIf="currentEventId >= 0">
+  <button mat-button [matMenuTriggerFor]="menu">Select an event to view</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="changeEvent(0)">An Event</button>
+    <button mat-menu-item (click)="changeEvent(1)">Another Event</button>
+  </mat-menu>
+
+  <app-upload [currentEventId]="currentEventId"></app-upload>
+
+  <button mat-raised-button color="accent" (click)="refreshGallery()">Refresh Gallery Listings
+  </button> <br>
+
+  <mat-icon class="next-page" color="primary" (click)="travelOnePage(false)">
+    <fa-icon [icon]="faLeftLong"></fa-icon>
+    Previous
+  </mat-icon>
+
+  Page {{ (currentOffset / 20) + 1 }}
+
+  <mat-icon class="next-page" color="primary" (click)="travelOnePage(true)">
+    <fa-icon [icon]="faRightLong"></fa-icon>
+    Next
+  </mat-icon>
+
+  <div class="gallery">
+    <app-gallery-item-component
+      *ngFor="let galleryItem of galleryData"
+      [galleryItemInput]="galleryItem">
+    </app-gallery-item-component>
+  </div>
+
+
+  <mat-icon class="next-page" color="primary" (click)="travelOnePage(false)">
+    <fa-icon [icon]="faLeftLong"></fa-icon>
+    Previous
+  </mat-icon>
+
+  Page {{ (currentOffset / 20) + 1 }}
+
+  <mat-icon class="next-page" color="primary" (click)="travelOnePage(true)">
+    <fa-icon [icon]="faRightLong"></fa-icon>
+    Next
+  </mat-icon>
+</ng-container>
+
+
+<ng-container *ngIf="currentEventId < 0">
+  <div class="center">
+    <h1>
+      <button mat-button [matMenuTriggerFor]="menu"><h1>Select an event to view</h1></button>
+    </h1>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="changeEvent(0)">Default</button>
+    <button mat-menu-item (click)="changeEvent(1)">Event 2</button>
+  </mat-menu>
+  </div>
+</ng-container>

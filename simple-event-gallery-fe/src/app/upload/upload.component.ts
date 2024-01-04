@@ -27,8 +27,11 @@ export class UploadComponent {
   @Input()
   requiredFileType: string = "image/*, video/*";
 
+  @Input()
+  currentEventId: number = -1;
+
   baseApiUrl: string = "http://scuttlinglizard.ddns.net:8001/api";
-  activeFileName: string = "";
+  feedback: string = "";
 
   constructor(private http: HttpClient) {
   }
@@ -51,23 +54,23 @@ export class UploadComponent {
 
     for (let i = 0; i < files.length; i++) {
       console.log(files[i].name);
-      this.uploadFile(files[i]);
+      this.uploadFile(files[i], this.currentEventId);
     }
   }
 
-  uploadFile(file: File) {
+  uploadFile(file: File, eventId : number) {
     const formData = new FormData();
     formData.append("file", file);
-
+    formData.append("eventId", eventId.toString());
     const upload$ = this.http.post(`${(this.baseApiUrl)}/upload`, formData, {
       reportProgress: true,
       observe: 'events'
     }).pipe(
       finalize(() => this.reset())
     );
-    upload$.subscribe(event => {
+    this.uploadSub = upload$.subscribe(event => {
       if (event.type == HttpEventType.UploadProgress) {
-        this.activeFileName = file.name;
+        this.feedback = "Uploading files...";
         if (event.total)
           this.uploadProgress = Math.round(100 * (event.loaded / event.total));
       }
@@ -84,7 +87,7 @@ export class UploadComponent {
     }
     this.uploadProgress = null;
     this.uploadSub = null;
-    this.activeFileName = "";
+    this.feedback = "";
   }
 
   protected readonly faCloudArrowUp = faCloudArrowUp;
