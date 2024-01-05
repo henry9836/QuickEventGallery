@@ -79,11 +79,13 @@ export class GalleryComponent {
     let pageVal = (<HTMLInputElement>document.getElementById("customPageNum")).value;
     let pageNum = Number(pageVal);
     pageNum -= 1;
-    if (pageNum < 1){
-      pageNum = 1;
+    if (pageNum < 0){
+      pageNum = 0;
     }
 
     this.currentOffset = pageNum * this.dbGroupSize;
+
+    this.downloadGalleryData();
   }
 
   changeEvent(newEventId : number){
