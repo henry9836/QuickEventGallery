@@ -75,6 +75,16 @@ export class GalleryComponent {
     this.downloadGalleryData();
   }
 
+  travelToTargetPage(){
+    let pageVal = (<HTMLInputElement>document.getElementById("customPageNum")).value;
+    let pageNum = Number(pageVal);
+    if (pageNum < 0){
+      pageNum = 0;
+    }
+
+    this.currentOffset = pageNum * this.dbGroupSize;
+  }
+
   changeEvent(newEventId : number){
     this.currentEventId = newEventId;
     this.currentOffset = 0;

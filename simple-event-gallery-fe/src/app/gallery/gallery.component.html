@@ -13,7 +13,10 @@
   <app-upload [currentEventId]="currentEventId"></app-upload>
 
   <button mat-raised-button color="accent" (click)="refreshGallery()">Refresh Gallery Listings
-  </button> <br>
+  </button>
+  <button mat-raised-button color="accent" (click)="travelToTargetPage()">Jump To Page:
+  </button> 
+  <input type="number" id="customPageNum" placeholder="0"></input><br>
 
   <mat-icon class="next-page" color="primary" (click)="travelOnePage(false)">
     <fa-icon [icon]="faLeftLong"></fa-icon>
