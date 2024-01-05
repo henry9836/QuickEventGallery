@@ -1,7 +1,7 @@
 <ng-container *ngIf="currentEventId >= 0">
   <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">Select an event to view</button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="changeEvent(0)">Testing</button>
+    <!-- <button mat-menu-item (click)="changeEvent(0)">Testing</button> -->
     <button mat-menu-item (click)="changeEvent(1)">100 Years In New Zealand</button>
     <button mat-menu-item (click)="changeEvent(2)">Chris's 50th Birthday</button>
     <button mat-menu-item (click)="changeEvent(2)">Feargus and Lani's 21st Birthday</button>
@@ -58,7 +58,7 @@
       <button mat-button [matMenuTriggerFor]="menu"><h1>Select an event to view</h1></button>
     </h1>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="changeEvent(0)">Testing</button>
+    <!-- <button mat-menu-item (click)="changeEvent(0)">Testing</button> -->
     <button mat-menu-item (click)="changeEvent(1)">100 Years In NZ</button>
     <button mat-menu-item (click)="changeEvent(2)">Chris's 50th Birthday</button>
     <button mat-menu-item (click)="changeEvent(2)">Feargus and Lani's 21st Birthday</button>
