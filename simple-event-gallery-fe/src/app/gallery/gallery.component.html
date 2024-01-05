@@ -1,7 +1,7 @@
 
 
 <ng-container *ngIf="currentEventId >= 0">
-  <button mat-button [matMenuTriggerFor]="menu">Select an event to view</button>
+  <button mat-raised-button [matMenuTriggerFor]="menu">Select an event to view</button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="changeEvent(0)">Testing</button>
     <button mat-menu-item (click)="changeEvent(1)">100 Years In New Zealand</button>
@@ -14,7 +14,7 @@
 
   <button mat-raised-button color="accent" (click)="refreshGallery()">Refresh Gallery Listings
   </button>
-  <button mat-raised-button color="accent" (click)="travelToTargetPage()">Jump To Page:
+  <button mat-raised-button color="primary" (click)="travelToTargetPage()">Jump To Page:
   </button> 
   <input type="number" id="customPageNum" placeholder="0"><br>
 
@@ -55,7 +55,7 @@
 <ng-container *ngIf="currentEventId < 0">
   <div class="center">
     <h1>
-      <button mat-button [matMenuTriggerFor]="menu"><h1>Select an event to view</h1></button>
+      <button mat-raised-button [matMenuTriggerFor]="menu"><h1>Select an event to view</h1></button>
     </h1>
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="changeEvent(0)">Testing</button>
